@@ -1,0 +1,13 @@
+name: Test Docker Gradle
+on: pull_request
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - name: Build the Docker image
+      run: docker build . -t redpillanalytics/docker-gradle:${{ github.sha }}
+    - name: Login to Docker Hub
+      run: docker login -u ${{ secrets.DOCKER_USERNAME}} -p ${{ secrets.DOCKER_PASSWORD}}
+    - name: Push Snapshot
+      run: docker push redpillanalytics/docker-gradle:${{ github.sha }}
