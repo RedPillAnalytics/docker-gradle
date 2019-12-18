@@ -1,10 +1,10 @@
 FROM gradle:latest
-USER root
 
-ARG gradleUserHome=.gradle
-ENV GRADLE_USER_HOME=$gradleUserHome
+ENV GRADLE_USER_HOME=.gradle
 
 # Run the Update
 RUN apt-get update && apt-get upgrade -y
+RUN apt-get install -y python3-pip
+RUN pip3 install awscli
 
 ENTRYPOINT ["/usr/bin/gradle"]
